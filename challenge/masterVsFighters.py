@@ -39,6 +39,11 @@ def make_fighter(code):
         return Fighter(8, 6, 5)
 
 
+def format_avg_dmg(values):
+    newer_method_string = "{:.2f}".format(values)
+    return newer_method_string
+
+
 class Profiler:
     def __init__(self):
         self.winner = ""
@@ -53,6 +58,13 @@ class Profiler:
         self.masterDmg = 0
 
     def to_return_arr(self):
+        self.avgDamageDealtByFighters = format_avg_dmg(self.avgDamageDealtByFighters)
+        self.avgDamageDealtByMaster = format_avg_dmg(self.avgDamageDealtByMaster)
+        # if self.avgDamageDealtByFighters[-1] == '0':
+        #     self.avgDamageDealtByFighters = self.avgDamageDealtByFighters[:-1]
+        # if self.avgDamageDealtByMaster[-1] == '0':
+        #     self.avgDamageDealtByMaster = self.avgDamageDealtByMaster[:-1]
+
         ret_list = []
         ret_list.append(str(self.winner))
         ret_list.append(str(self.fightersDefeated))
@@ -112,7 +124,7 @@ def the_epic_fight(master, list_of_fighter, profiler):
 
 
 def round_avg(value):
-    answer = str(round(value, 2))
+    answer = round(value, 2)
     return answer
 
 
@@ -133,9 +145,15 @@ def masterVsFighters(fighters, master):
         profiler.masterHealth = 0
         profiler.winner = "Fighters"
 
-    profiler.avgDamageDealtByMaster = round_avg(profiler.masterDmg/profiler.hitsByMaster)
-    profiler.avgDamageDealtByFighters = round_avg(profiler.figterDmg/profiler.hitsByFighters)
+    if profiler.hitsByMaster != 0:
+        profiler.avgDamageDealtByMaster = round_avg(profiler.masterDmg/profiler.hitsByMaster)
+    else:
+        profiler.avgDamageDealtByMaster = 0
 
+    if profiler.hitsByFighters != 0:
+        profiler.avgDamageDealtByFighters = round_avg(profiler.figterDmg/profiler.hitsByFighters)
+    else:
+        profiler.avgDamageDealtByFighters = 0
 
     return profiler.to_return_arr()
 
