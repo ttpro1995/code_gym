@@ -37,7 +37,7 @@ def battle(max_turn = 200):
 
 if __name__ == "__main__":
     win_count = 0
-    for i in range(100000):
+    for i in range(1000000):
         battle_result = battle()
         if battle_result:
             win_count+=1
